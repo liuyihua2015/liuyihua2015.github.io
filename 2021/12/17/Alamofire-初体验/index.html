@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Alamofire-初体验 | Hexo</title>
+  <meta name="description" content="对于iOS开发者来说，AFNetworking是我们大家所熟知的，而Alamofire呢？Alamofire框架其实就是AFNetworking兄弟，出自于同一个作者。既是同一个作者，那么他们的使用方法，框架结构上应该也是保持一致的。AFNetworking、Alamofire  一、回顾苹果原生网络请求一、网络请求步骤 设置请求url 设置URLRequest对象，配置请求相关信息 创建会话">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Alamofire-初体验">
+<meta property="og:url" content="https://liuyihua2015.github.io/2021/12/17/Alamofire-%E5%88%9D%E4%BD%93%E9%AA%8C/index.html">
+<meta property="og:site_name" content="LIU YIHUA&#96;S WORLD">
+<meta property="og:description" content="对于iOS开发者来说，AFNetworking是我们大家所熟知的，而Alamofire呢？Alamofire框架其实就是AFNetworking兄弟，出自于同一个作者。既是同一个作者，那么他们的使用方法，框架结构上应该也是保持一致的。AFNetworking、Alamofire  一、回顾苹果原生网络请求一、网络请求步骤 设置请求url 设置URLRequest对象，配置请求相关信息 创建会话">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liuyihua2015.github.io/2021/12/17/Alamofire-%E5%88%9D%E4%BD%93%E9%AA%8C/pictureName.png">
+<meta property="article:published_time" content="2021-12-17T02:59:23.000Z">
+<meta property="article:modified_time" content="2021-12-17T08:16:27.994Z">
+<meta property="article:author" content="liuyihua">
+<meta property="article:tag" content="Alamofire">
+<meta property="article:tag" content="swift">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liuyihua2015.github.io/2021/12/17/Alamofire-%E5%88%9D%E4%BD%93%E9%AA%8C/pictureName.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://liuyihua2015.github.io/2021/12/17/Alamofire-%E5%88%9D%E4%BD%93%E9%AA%8C/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="LIU YIHUA`S WORLD" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center theme-purple" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/liuyihua2015" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">liuyihua</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">iOS &amp; Flutter &amp; Web Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> NanJing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/liuyihua2015" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BF%83%E5%BE%97/">心得</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6/">网络框架</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Alamofire/" rel="tag">Alamofire</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Alamofire/" style="font-size: 13px;">Alamofire</a> <a href="/tags/Hexo/" style="font-size: 13px;">Hexo</a> <a href="/tags/swift/" style="font-size: 13px;">swift</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%BF%83%E5%BE%97/">心得</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/12/17/Hexo%20%E5%AE%9E%E7%8E%B0%E5%AE%9E%E6%97%B6%E9%A2%84%E8%A7%88/" class="title">Hexo 有效的插件</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-12-17T02:59:23.000Z" itemprop="datePublished">2021-12-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6/">网络框架</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/12/17/Alamofire-%E5%88%9D%E4%BD%93%E9%AA%8C/" class="title">Alamofire-初体验</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-12-17T02:59:23.000Z" itemprop="datePublished">2021-12-17</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9B%9E%E9%A1%BE%E8%8B%B9%E6%9E%9C%E5%8E%9F%E7%94%9F%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">一、回顾苹果原生网络请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.</span> <span class="toc-text">一、网络请求步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BD%93%E9%AA%8C"><span class="toc-number">3.</span> <span class="toc-text">二、体验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E3%80%81URLSession"><span class="toc-number">4.</span> <span class="toc-text">三、URLSession</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81%E8%AE%BE%E7%BD%AEURL%E8%AF%B7%E6%B1%82%E5%9C%B0%E5%9D%80"><span class="toc-number">4.1.</span> <span class="toc-text">1、设置URL请求地址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81%E8%AE%BE%E7%BD%AEURLRequest%E5%B1%9E%E6%80%A7"><span class="toc-number">4.2.</span> <span class="toc-text">2、设置URLRequest属性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81%E5%8F%91%E8%B5%B7%E8%AF%B7%E6%B1%82"><span class="toc-number">4.3.</span> <span class="toc-text">3、发起请求</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9B%E3%80%81URLSessionConfiguration"><span class="toc-number">5.</span> <span class="toc-text">四、URLSessionConfiguration</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Alamofire-初体验" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Alamofire-初体验
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/12/17/Alamofire-%E5%88%9D%E4%BD%93%E9%AA%8C/" class="article-date">
+	  <time datetime="2021-12-17T02:59:23.000Z" itemprop="datePublished">2021-12-17</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6/">网络框架</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Alamofire/" rel="tag">Alamofire</a>, <a class="article-tag-link-link" href="/tags/swift/" rel="tag">swift</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/12/17/Alamofire-%E5%88%9D%E4%BD%93%E9%AA%8C/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.5k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 6(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p><img src="/2021/12/17/Alamofire-%E5%88%9D%E4%BD%93%E9%AA%8C/pictureName.png" alt="pictureName"></p>
+<blockquote>
+<p>对于iOS开发者来说，<code>AFNetworking</code>是我们大家所熟知的，而<code>Alamofire</code>呢？<code>Alamofire</code>框架其实就是<code>AFNetworking</code>兄弟，出自于同一个作者。既是同一个作者，那么他们的使用方法，框架结构上应该也是保持一致的。<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://github.com/AFNetworking/AFNetworking">AFNetworking</a>、<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://github.com/Alamofire/Alamofire">Alamofire</a></p>
+</blockquote>
+<h4 id="一、回顾苹果原生网络请求"><a href="#一、回顾苹果原生网络请求" class="headerlink" title="一、回顾苹果原生网络请求"></a>一、回顾苹果原生网络请求</h4><h4 id="一、网络请求步骤"><a href="#一、网络请求步骤" class="headerlink" title="一、网络请求步骤"></a>一、网络请求步骤</h4><ol>
+<li>设置请求<code>url</code></li>
+<li>设置<code>URLRequest</code>对象，配置请求相关信息</li>
+<li>创建会话配置<code>URLSessionConfiguration</code></li>
+<li>创建会话<code>URLSession</code></li>
+<li>创建任务和设置请求回调，并发起请求</li>
+</ol>
+<blockquote>
+<p>一般通过以上几个步来完成网络请求，当然要根据不同应用场景来配置请求属性。</p>
+</blockquote>
+<h4 id="二、体验"><a href="#二、体验" class="headerlink" title="二、体验"></a>二、体验</h4><p>发起一个请求：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">responseData</span>()</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> url <span class="operator">=</span> <span class="string">&quot;http://onapp.yahibo.top/public/?s=api/test/list&quot;</span></span><br><span class="line">    <span class="type">Alamofire</span>.request(url).responseJSON &#123;</span><br><span class="line">        (response) <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">switch</span> response.result&#123;</span><br><span class="line">        <span class="keyword">case</span> .success(<span class="keyword">let</span> json):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;json:<span class="subst">\(json)</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">let</span> dict <span class="operator">=</span> json <span class="keyword">as!</span> <span class="type">Dictionary</span>&lt;<span class="type">String</span>, <span class="keyword">Any</span>&gt;</span><br><span class="line">            <span class="keyword">let</span> list <span class="operator">=</span> dict[<span class="string">&quot;data&quot;</span>] <span class="keyword">as!</span> <span class="type">Array</span>&lt;<span class="type">AnyObject</span>&gt;</span><br><span class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> result <span class="operator">=</span> [<span class="type">UserModel1</span>].deserialize(from: list) <span class="keyword">else</span>&#123;<span class="keyword">return</span>&#125;</span><br><span class="line">            <span class="keyword">self</span>.observable.onNext(result <span class="keyword">as</span> [<span class="keyword">Any</span>])</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">case</span> .failure(<span class="keyword">let</span> error):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;error:<span class="subst">\(error)</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>responseJSON</code>为相应类型，指定为<code>json</code>数据类型</li>
+<li><code>response</code>是<code>Alamofire</code>对服务器响应结果的封装</li>
+<li>使用常规解包获取数据<code>headimg</code></li>
+<li>通过<code>HandyJSON</code>转换为模型数据，供<code>UI</code>展示</li>
+</ul>
+<p>直接通过<code>Alamofire</code>发起请求通过一个闭包返回请求结果，不需要二次封装使用简单。这里我们没有标明请求类型，没有请求参数，那<code>Alamofire</code>是如何封装这些请求参数的呢，点击进入查看方法定义：</p>
+<p>这里已经提供了请求所需要的参数，并设置了默认值，因此外界在没有指定方法时默认为<code>get</code>方式。根据实际开发需求设置响应的参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Alamofire.request(url,method: .post,parameters: [<span class="string">&quot;page&quot;</span>:<span class="string">&quot;1&quot;</span>,<span class="string">&quot;size&quot;</span>:<span class="string">&quot;20&quot;</span>]).responseJSON</span><br></pre></td></tr></table></figure>
+
+<p>这是我们开发中常见的设置请求方式，请求参数，这里的<code>url</code>支持多种数据类型，可以是<code>String、URL、URLRequest</code>等类型，为什么这么设计呢？因为在项目中可能当前我们跟前有一个<code>String</code>类型的连接，也有可能是个<code>URL</code>类型的连接，这时候在不需要转换的情况下就可以直接使用，方便快捷，更加灵活。</p>
+<h4 id="三、URLSession"><a href="#三、URLSession" class="headerlink" title="三、URLSession"></a>三、URLSession</h4><p>同样在<code>Alamofire</code>中也是对<code>URLSession</code>封装的，在<code>OC</code>中为<code>NSURLSession</code>，其实是一样的。一般网络请求分三个步骤：</p>
+<h5 id="1、设置URL请求地址"><a href="#1、设置URL请求地址" class="headerlink" title="1、设置URL请求地址"></a>1、设置URL请求地址</h5><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> url = URL.<span class="keyword">init</span>(<span class="built_in">string</span>: <span class="string">&quot;协议://主机地址/路径/参数1&amp;参数2&quot;</span>)!</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>协议：指定<code>http</code>协议还是<code>https</code>协议</li>
+<li>主机：即服务器地址<code>ip</code>地址或绑定<code>ip</code>的域名</li>
+<li>路径：项目在服务器上的位置</li>
+<li>参数：即<code>get</code>参数拼接在连接上</li>
+</ul>
+<h5 id="2、设置URLRequest属性"><a href="#2、设置URLRequest属性" class="headerlink" title="2、设置URLRequest属性"></a>2、设置URLRequest属性</h5><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> request  = URLRequest.<span class="keyword">init</span>(url: url)</span><br><span class="line">request.httpMethod = HTTPMethod.post.rawValue</span><br><span class="line">request.setValue(<span class="string">&quot;application/json&quot;</span>, forHTTPHeaderField: <span class="string">&quot;Content-Type&quot;</span>)</span><br><span class="line">let postData = [<span class="string">&quot;username&quot;</span>:<span class="string">&quot;hibo&quot;</span>,<span class="string">&quot;password&quot;</span>:<span class="string">&quot;123456&quot;</span>]</span><br><span class="line">request.httpBody = <span class="keyword">try</span>?JSONSerialization.<span class="keyword">data</span>(withJSONObject: postData, options: [])</span><br><span class="line">request.timeoutInterval = <span class="number">30</span></span><br><span class="line">request.cachePolicy = .useProtocolCachePolicy</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>httpMethod</code>设置请求方式<code>post</code>或<code>get</code></li>
+<li><code>setValue</code>设置请求头信息</li>
+<li><code>httpBody</code>设置请求参数，参数打包在请求体中</li>
+<li><code>timeoutInterval</code>设置请求超时时间</li>
+<li><code>cachePolicy</code>设置网络请求缓存策略</li>
+</ul>
+<blockquote>
+<p>通过以上的参数设置，能够感受到发送一次请求是多么不容易，因此网络请求是必须要被封装的</p>
+</blockquote>
+<h5 id="3、发起请求"><a href="#3、发起请求" class="headerlink" title="3、发起请求"></a>3、发起请求</h5><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">URLSession.shared.dataTask(<span class="keyword">with</span>: request) &#123; (data, response, error) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;*******网络请求*******&quot;</span>)</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        let list =  <span class="keyword">try</span> JSONSerialization.jsonObject(<span class="keyword">with</span>: data!, options: .allowFragments)</span><br><span class="line">        <span class="built_in">print</span>(list)</span><br><span class="line">    &#125;<span class="keyword">catch</span>&#123;</span><br><span class="line">        <span class="built_in">print</span>(error)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;.resume()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>URLSession.shared</code>为全局共享单例会话对象</li>
+<li>调用<code>dataTask</code>创建网络请求任务</li>
+<li><code>resume</code>默认为挂起状态，调用重新启动网络请求任务</li>
+<li><code>data</code>：请求到的数据流，通过<code>JSONSerialization</code>序列化为<code>json</code>格式使用</li>
+</ul>
+<h4 id="四、URLSessionConfiguration"><a href="#四、URLSessionConfiguration" class="headerlink" title="四、URLSessionConfiguration"></a>四、URLSessionConfiguration</h4><p>在<code>URLSession.shared</code>中内部已经配置了该项，此项为会话配置项，一般使用都会进行配置以适用于不同场景。查看该类如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">var</span> `<span class="title">default</span>`: <span class="type">URLSessionConfiguration &#123; get &#125;</span></span></span><br><span class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">var</span> <span class="title">ephemeral</span>: <span class="type">URLSessionConfiguration &#123; get &#125;</span></span></span><br><span class="line"><span class="meta">@available(iOS 8.0, *)</span></span><br><span class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">background</span></span>(withIdentifier identifier: String) -&gt; URLSessionConfiguration</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>default</code>：默认模式，常用模式，在该模式下系统会创建持久化缓存，并在用户的钥匙串中保存证书</li>
+<li><code>ephemeral</code>：不支持持久性存储，所有内容的会随着<code>session</code>的生命周期结束而释放</li>
+<li><code>background</code>：与<code>default</code>模式类似，在该模式下会创建一个独立线程来传输网络请求数据，可以在后台乃至APP关闭的时候也可以进行数据传输</li>
+</ul>
+<p>创建一个会话：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> configuration <span class="operator">=</span> <span class="type">URLSessionConfiguration</span>.background(withIdentifier: <span class="string">&quot;request_id&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> session <span class="operator">=</span> <span class="type">URLSession</span>.<span class="keyword">init</span>(configuration: configuration, delegate: <span class="keyword">self</span>, delegateQueue: <span class="type">OperationQueue</span>.main)</span><br><span class="line">session.dataTask(with: request) &#123; (data, response, error) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;*******网络请求*******&quot;</span>)</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> list <span class="operator">=</span>  <span class="keyword">try</span> <span class="type">JSONSerialization</span>.jsonObject(with: data<span class="operator">!</span>, options: .allowFragments)</span><br><span class="line">        <span class="built_in">print</span>(list)</span><br><span class="line">    &#125;<span class="keyword">catch</span>&#123;</span><br><span class="line">        <span class="built_in">print</span>(error)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;.resume()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>设置一个唯一会话标识，通过标识来区分不同的会话任务</li>
+<li>遵循<code>URLSessionDelegate</code>代理，实现代理方法，在本类中监控任务进度</li>
+</ul>
+<p>下载任务：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> configuration <span class="operator">=</span> <span class="type">URLSessionConfiguration</span>.background(withIdentifier: <span class="string">&quot;request_id&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> session <span class="operator">=</span> <span class="type">URLSession</span>.<span class="keyword">init</span>(configuration: configuration, delegate: <span class="keyword">self</span>, delegateQueue: <span class="type">OperationQueue</span>.main)</span><br><span class="line">session.downloadTask(with: url).resume()</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意在使用<code>background</code>模式时一定要开启后台下载权限，否则无法完成后台下载并回调数据。</strong>需要以下两步才能完成：</p>
+<p>1、开启后台下载权限</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> backgroundHandler: (()-&gt;<span class="type">Void</span>)<span class="operator">?</span> <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line"><span class="comment">//设置此处开启后台下载权限</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">application</span>(<span class="keyword">_</span> <span class="params">application</span>: <span class="type">UIApplication</span>, <span class="params">handleEventsForBackgroundURLSession</span> <span class="params">identifier</span>: <span class="type">String</span>, <span class="params">completionHandler</span>: <span class="keyword">@escaping</span> () -&gt; <span class="type">Void</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">self</span>.backgroundHandler <span class="operator">=</span> completionHandler</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、实现<code>SessionDelegate</code>代理方法，调用闭包方法，通知系统更新屏幕</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">urlSessionDidFinishEvents</span>(<span class="params">forBackgroundURLSession</span> <span class="params">session</span>: <span class="type">URLSession</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;后台任务下载回来&quot;</span>)</span><br><span class="line">    <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> appDelegate <span class="operator">=</span> <span class="type">UIApplication</span>.shared.delegate <span class="keyword">as?</span> <span class="type">AppDelegate</span>, <span class="keyword">let</span> backgroundHandle <span class="operator">=</span> appDelegate.backgroundHandler <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        backgroundHandle()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>苹果官方给出需要实现以上两个方法来完成后台下载，通知系统及时更新屏幕。<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=%5Bhttps://developer.apple.com/documentation/foundation/nsurlsessiondelegate/1617185-urlsessiondidfinisheventsforback?language=objc%5D(https://developer.apple.com/documentation/foundation/nsurlsessiondelegate/1617185-urlsessiondidfinisheventsforback?language=objc)">官方文档</a></p>
+</blockquote>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://liuyihua2015.github.io/2021/12/17/Alamofire-%E5%88%9D%E4%BD%93%E9%AA%8C/" title="Alamofire-初体验" target="_blank" rel="external">https://liuyihua2015.github.io/2021/12/17/Alamofire-初体验/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/liuyihua2015" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/liuyihua2015" target="_blank"><span class="text-dark">liuyihua</span><small class="ml-1x">iOS &amp; Flutter &amp; Web Developer</small></a></h3>
+        <div>前端移动开发</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/12/17/Hexo%20%E5%AE%9E%E7%8E%B0%E5%AE%9E%E6%97%B6%E9%A2%84%E8%A7%88/" title="Hexo 有效的插件"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/liuyihua2015" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
