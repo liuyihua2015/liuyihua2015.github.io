@@ -6,7 +6,7 @@
   <link href="https://liuyihua2015.github.io/atom.xml" rel="self"/>
   
   <link href="https://liuyihua2015.github.io/"/>
-  <updated>2021-12-17T08:14:29.262Z</updated>
+  <updated>2021-12-17T08:16:27.994Z</updated>
   <id>https://liuyihua2015.github.io/</id>
   
   <author>
@@ -15,30 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>Hexo 有效的插件</title>
-    <link href="https://liuyihua2015.github.io/2021/12/17/Hexo%20%E5%AE%9E%E7%8E%B0%E5%AE%9E%E6%97%B6%E9%A2%84%E8%A7%88/"/>
-    <id>https://liuyihua2015.github.io/2021/12/17/Hexo%20%E5%AE%9E%E7%8E%B0%E5%AE%9E%E6%97%B6%E9%A2%84%E8%A7%88/</id>
-    <published>2021-12-17T02:59:23.000Z</published>
-    <updated>2021-12-17T08:14:29.262Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="一、实现实时预览编辑"><a href="#一、实现实时预览编辑" class="headerlink" title="一、实现实时预览编辑"></a>一、实现实时预览编辑</h3><p>在用了一段时间 Hexo 后, 发现写 Hexo 文章时需要到在线的 Markdown 编辑器中实时预览, 感觉还是有些不方便.</p><p>在网上一番寻找之后, 发现了一个插件: <a href="https://github.com/hexojs/hexo-browsersync/">hexo-browsersync</a>, 这是一个移植插件, 项目主页上基本没有过多的介绍. 下面写一些我自己使用的心得吧.</p><h4 id="Hexo-Browsersync-使用方法"><a href="#Hexo-Browsersync-使用方法" class="headerlink" title="Hexo-Browsersync 使用方法"></a>Hexo-Browsersync 使用方法</h4><p>首先在项目目录下安装 <code>hexo-browsersync</code> 插件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> hexo_project/</span><br><span class="line">$ npm install hexo-browsersync --save</span><br></pre></td></tr></table></figure><p>然后运行 hexo server, 看到以下内容就说明启动成功啦.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s</span><br><span class="line">[BS] Access URLs:</span><br><span class="line"> --------------------------------------</span><br><span class="line">          UI: http://localhost:3001</span><br><span class="line"> --------------------------------------</span><br><span class="line"> UI External: http://192.168.191.1:3001</span><br><span class="line"> --------------------------------------</span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure><p>其中 3001 端口是 browsersync 的配置页面, 4000 端口就是我们的调试页面了.</p><h4 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h4><ul><li><a href="https://yq.aliyun.com/articles/3060">Hexo Server 的一个迷の bug</a> – 潘佳邦</li><li><a href="https://github.com/hexojs/hexo-browsersync/issues/12">https://github.com/hexojs/hexo-browsersync/issues/12</a></li></ul><h3 id="二、图片插件"><a href="#二、图片插件" class="headerlink" title="二、图片插件"></a>二、图片插件</h3><p>插件<strong>hexo-renderer-marked</strong>解决了这个问题。可以只用<strong>npm install hexo-renderer-marked</strong>命令直接安装，之后在<strong>config.yaml</strong>中更改配置如下：</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">post_asset_folder:</span> <span class="literal">true</span></span><br><span class="line"><span class="symbol">marked:</span></span><br><span class="line">  <span class="symbol">prependRoot:</span> <span class="literal">true</span></span><br><span class="line">  <span class="symbol">postAsset:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure><p>之后就可以在使用</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![](image.jpg)</span><br></pre></td></tr></table></figure><p>的方式愉快的插入图片了。</p><p>我们做了这么多都是为了方便，那么为什么不再方便一点呢。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;一、实现实时预览编辑&quot;&gt;&lt;a href=&quot;#一、实现实时预览编辑&quot; class=&quot;headerlink&quot; title=&quot;一、实现实时预览编辑&quot;&gt;&lt;/a&gt;一、实现实时预览编辑&lt;/h3&gt;&lt;p&gt;在用了一段时间 Hexo 后, 发现写 Hexo 文章时需要到在线的 Mar</summary>
-      
-    
-    
-    
-    <category term="心得" scheme="https://liuyihua2015.github.io/categories/%E5%BF%83%E5%BE%97/"/>
-    
-    
-    <category term="Hexo" scheme="https://liuyihua2015.github.io/tags/Hexo/"/>
-    
-  </entry>
   
   <entry>
     <title>Alamofire-初体验</title>
@@ -65,6 +41,30 @@
     <category term="Alamofire" scheme="https://liuyihua2015.github.io/tags/Alamofire/"/>
     
     <category term="swift" scheme="https://liuyihua2015.github.io/tags/swift/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo 有效的插件</title>
+    <link href="https://liuyihua2015.github.io/2021/12/17/Hexo%20%E5%AE%9E%E7%8E%B0%E5%AE%9E%E6%97%B6%E9%A2%84%E8%A7%88/"/>
+    <id>https://liuyihua2015.github.io/2021/12/17/Hexo%20%E5%AE%9E%E7%8E%B0%E5%AE%9E%E6%97%B6%E9%A2%84%E8%A7%88/</id>
+    <published>2021-12-17T02:59:23.000Z</published>
+    <updated>2021-12-17T08:14:29.262Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="一、实现实时预览编辑"><a href="#一、实现实时预览编辑" class="headerlink" title="一、实现实时预览编辑"></a>一、实现实时预览编辑</h3><p>在用了一段时间 Hexo 后, 发现写 Hexo 文章时需要到在线的 Markdown 编辑器中实时预览, 感觉还是有些不方便.</p><p>在网上一番寻找之后, 发现了一个插件: <a href="https://github.com/hexojs/hexo-browsersync/">hexo-browsersync</a>, 这是一个移植插件, 项目主页上基本没有过多的介绍. 下面写一些我自己使用的心得吧.</p><h4 id="Hexo-Browsersync-使用方法"><a href="#Hexo-Browsersync-使用方法" class="headerlink" title="Hexo-Browsersync 使用方法"></a>Hexo-Browsersync 使用方法</h4><p>首先在项目目录下安装 <code>hexo-browsersync</code> 插件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> hexo_project/</span><br><span class="line">$ npm install hexo-browsersync --save</span><br></pre></td></tr></table></figure><p>然后运行 hexo server, 看到以下内容就说明启动成功啦.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s</span><br><span class="line">[BS] Access URLs:</span><br><span class="line"> --------------------------------------</span><br><span class="line">          UI: http://localhost:3001</span><br><span class="line"> --------------------------------------</span><br><span class="line"> UI External: http://192.168.191.1:3001</span><br><span class="line"> --------------------------------------</span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure><p>其中 3001 端口是 browsersync 的配置页面, 4000 端口就是我们的调试页面了.</p><h4 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h4><ul><li><a href="https://yq.aliyun.com/articles/3060">Hexo Server 的一个迷の bug</a> – 潘佳邦</li><li><a href="https://github.com/hexojs/hexo-browsersync/issues/12">https://github.com/hexojs/hexo-browsersync/issues/12</a></li></ul><h3 id="二、图片插件"><a href="#二、图片插件" class="headerlink" title="二、图片插件"></a>二、图片插件</h3><p>插件<strong>hexo-renderer-marked</strong>解决了这个问题。可以只用<strong>npm install hexo-renderer-marked</strong>命令直接安装，之后在<strong>config.yaml</strong>中更改配置如下：</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">post_asset_folder:</span> <span class="literal">true</span></span><br><span class="line"><span class="symbol">marked:</span></span><br><span class="line">  <span class="symbol">prependRoot:</span> <span class="literal">true</span></span><br><span class="line">  <span class="symbol">postAsset:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure><p>之后就可以在使用</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![](image.jpg)</span><br></pre></td></tr></table></figure><p>的方式愉快的插入图片了。</p><p>我们做了这么多都是为了方便，那么为什么不再方便一点呢。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;一、实现实时预览编辑&quot;&gt;&lt;a href=&quot;#一、实现实时预览编辑&quot; class=&quot;headerlink&quot; title=&quot;一、实现实时预览编辑&quot;&gt;&lt;/a&gt;一、实现实时预览编辑&lt;/h3&gt;&lt;p&gt;在用了一段时间 Hexo 后, 发现写 Hexo 文章时需要到在线的 Mar</summary>
+      
+    
+    
+    
+    <category term="心得" scheme="https://liuyihua2015.github.io/categories/%E5%BF%83%E5%BE%97/"/>
+    
+    
+    <category term="Hexo" scheme="https://liuyihua2015.github.io/tags/Hexo/"/>
     
   </entry>
   
